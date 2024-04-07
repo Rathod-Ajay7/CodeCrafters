@@ -77,7 +77,7 @@ void writeStudentData(const string &filename, const vector<Student> &students)
     {
         file << student.srNo << "," << student.name << "," << student.interviewDate << "," << student.interviewStatus << "," << student.interviewStartTime << ","
              << student.interviewEndTime << "," << student.studentId << "," << student.email << "," << student.program << "," << student.contactNo << ","
-             << student.whatsappNo << "," << student.alternateNo << "," << student.skypeId << endl;
+             << student.whatsappNo << "," << student.alternateNo << "," << student.skypeId <<","<< endl;
         count++;
     }
     nuberofstudent[x] = count;
