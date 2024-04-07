@@ -1,29 +1,29 @@
 #include <iostream>
-#include <fstream>//for file handling
-//https://www.tutorialspoint.com/cplusplus/cpp_files_streams.htm
+#include <fstream> //for file handling
+// https://www.tutorialspoint.com/cplusplus/cpp_files_streams.htm
 #include <vector>
 #include <sstream>
-#include <algorithm>//for data sorting
-#include <cstdio>//for delete file
+#include <algorithm> //for data sorting
+#include <cstdio>    //for delete file
 
 using namespace std;
 
-//structure for store student data
+// structure for store student data
 struct Student
 {
-    int srNo; 
-    string name;  
-    string interviewDate;  
-    string interviewStatus;  
-    string interviewStartTime;  
-    string interviewEndTime;  
-    string studentId;  
-    string email;  
-    string program;  
-    string contactNo;  
-    string whatsappNo;  
-    string alternateNo;  
-    string skypeId; 
+    int srNo;
+    string name;
+    string interviewDate;
+    string interviewStatus;
+    string interviewStartTime;
+    string interviewEndTime;
+    string studentId;
+    string email;
+    string program;
+    string contactNo;
+    string whatsappNo;
+    string alternateNo;
+    string skypeId;
 };
 
 // For read student data from a CSV file
@@ -39,7 +39,7 @@ vector<Student> readStudentData(const string &filename)
     // for Read each line of the file
     while (getline(file, line))
     {
-        istringstream data(line);//https://www.geeksforgeeks.org/processing-strings-using-stdistringstream/
+        istringstream data(line); // https://www.geeksforgeeks.org/processing-strings-using-stdistringstream/
         Student student;
         char comma;
 
@@ -58,13 +58,11 @@ vector<Student> readStudentData(const string &filename)
         getline(data, student.alternateNo, ',');
         getline(data, student.skypeId);
 
-        
         students.push_back(student);
     }
 
     return students;
 }
-
 
 int nuberofstudent[5] = {0}; // for store number of students in each round in array
 int x = 0;
@@ -75,7 +73,7 @@ void writeStudentData(const string &filename, const vector<Student> &students)
     ofstream file(filename);
     int count = 0;
     file << "Sr. No.,Name,Interview Date,Interview Status,Interview Start Time,Interview End Time,Student ID,Email,Program,Contact No.,WhatsApp No.,Alternate No.,Skype ID," << endl;
-    for (const auto &student : students)//https://stackoverflow.com/questions/22225148/what-does-for-const-auto-s-strs-mean
+    for (const auto &student : students) // https://stackoverflow.com/questions/22225148/what-does-for-const-auto-s-strs-mean
     {
         file << student.srNo << "," << student.name << "," << student.interviewDate << "," << student.interviewStatus << "," << student.interviewStartTime << ","
              << student.interviewEndTime << "," << student.studentId << "," << student.email << "," << student.program << "," << student.contactNo << ","
@@ -104,14 +102,14 @@ bool compareStudentsByStudentId(const Student &a, const Student &b)
     return a.studentId < b.studentId;
 }
 
-//structure for store user login detail
+// structure for store user login detail
 struct User
 {
     string username;
-    string password;  
+    string password;
 };
 
-//Authentication based on username and password
+// Authentication based on username and password
 bool authenticateUser(const string &username, const string &password)
 {
     vector<User> users = {{"placementcell00", "12345678"}, {"placementcell01", "12345678"}};
@@ -121,11 +119,11 @@ bool authenticateUser(const string &username, const string &password)
     {
         if (user.username == username && user.password == password)
         {
-            return true; 
+            return true;
         }
     }
 
-    return false; 
+    return false;
 }
 
 int main()
@@ -137,8 +135,8 @@ int main()
     vector<Student> hrRound = readStudentData("HRround.csv");
     vector<Student> finalSelects = readStudentData("finalselects.csv");
 
-    //for get number of student in each round and maintaing last sr.no for insert student detail
-    //https://www.geeksforgeeks.org/csv-file-management-using-c/
+    // for get number of student in each round and maintaing last sr.no for insert student detail
+    // https://www.geeksforgeeks.org/csv-file-management-using-c/
     writeStudentData("a1.csv", round1);
     writeStudentData("a2.csv", round2);
     writeStudentData("a3.csv", round3);
@@ -149,8 +147,7 @@ int main()
     remove("a3.csv");
     remove("a4.csv");
     remove("a5.csv");
-    
-    
+
     int choice;
     string input;
     Student studentDetails;
@@ -162,10 +159,11 @@ int main()
 
     do
     {
-        cout<<endl<<endl;
-        cout << "Welcome to our project!"<<endl;
-        cout << "                         P2. DA-IICT Placement Manager:                     "<<endl;
-        cout<<  " Please choose an option:  " << endl;
+        cout << endl
+             << endl;
+        cout << "Welcome to our project!" << endl;
+        cout << "                         P2. DA-IICT Placement Manager:                     " << endl;
+        cout << " Please choose an option:  " << endl;
         cout << "1. Sort data by name               " << endl;
         cout << "2. Sort data by program            " << endl;
         cout << "3. Sort data by student ID         " << endl;
@@ -178,71 +176,67 @@ int main()
 
         switch (choice)
         {
-            
-            case 1:
-            //sort by name
-            //https://www.geeksforgeeks.org/sort-c-stl/
-                sort(round1.begin(), round1.end(), compareStudentsByName);
-                sort(round2.begin(), round2.end(), compareStudentsByName);
-                sort(round3.begin(), round3.end(), compareStudentsByName);
-                sort(hrRound.begin(), hrRound.end(), compareStudentsByName);
-                sort(finalSelects.begin(), finalSelects.end(), compareStudentsByName);
-                writeStudentData("short_by_name_round1.csv", round1);
-                writeStudentData("short_by_name_round2.csv", round2);
-                writeStudentData("short_by_name_round3.csv", round3);
-                writeStudentData("short_by_name_hrRound.csv", hrRound);
-                writeStudentData("short_by_name_finalSelects.csv", finalSelects);
-                break;
-            case 2:
-            //sort by programe
-                sort(round1.begin(), round1.end(), compareStudentsByProgram);
-                sort(round2.begin(), round2.end(), compareStudentsByProgram);
-                sort(round3.begin(), round3.end(), compareStudentsByProgram);
-                sort(hrRound.begin(), hrRound.end(), compareStudentsByProgram);
-                sort(finalSelects.begin(), finalSelects.end(), compareStudentsByProgram);
-                writeStudentData("short_by_program_round1.csv", round1);
-                writeStudentData("short_by_program_round2.csv", round2);
-                writeStudentData("short_by_program_round3.csv", round3);
-                writeStudentData("short_by_program_hrRound.csv", hrRound);
-                writeStudentData("short_by_program_finalSelects.csv", finalSelects);
-                break;
-            case 3:
-            //sort by student id
-                sort(round1.begin(), round1.end(), compareStudentsByStudentId);
-                sort(round2.begin(), round2.end(), compareStudentsByStudentId);
-                sort(round3.begin(), round3.end(), compareStudentsByStudentId);
-                sort(hrRound.begin(), hrRound.end(), compareStudentsByStudentId);
-                sort(finalSelects.begin(), finalSelects.end(), compareStudentsByStudentId);
-                writeStudentData("short_by_id_round1.csv", round1);
-                writeStudentData("short_by_id_round2.csv", round2);
-                writeStudentData("short_by_id_round3.csv", round3);
-                writeStudentData("short_by_id_hrRound.csv", hrRound);
-                writeStudentData("short_by_id_finalSelects.csv", finalSelects);
-                break;
 
-            
-            
+        case 1:
+            // sort by name
+            // https://www.geeksforgeeks.org/sort-c-stl/
+            sort(round1.begin(), round1.end(), compareStudentsByName);
+            sort(round2.begin(), round2.end(), compareStudentsByName);
+            sort(round3.begin(), round3.end(), compareStudentsByName);
+            sort(hrRound.begin(), hrRound.end(), compareStudentsByName);
+            sort(finalSelects.begin(), finalSelects.end(), compareStudentsByName);
+            writeStudentData("short_by_name_round1.csv", round1);
+            writeStudentData("short_by_name_round2.csv", round2);
+            writeStudentData("short_by_name_round3.csv", round3);
+            writeStudentData("short_by_name_hrRound.csv", hrRound);
+            writeStudentData("short_by_name_finalSelects.csv", finalSelects);
+            break;
+        case 2:
+            // sort by programe
+            sort(round1.begin(), round1.end(), compareStudentsByProgram);
+            sort(round2.begin(), round2.end(), compareStudentsByProgram);
+            sort(round3.begin(), round3.end(), compareStudentsByProgram);
+            sort(hrRound.begin(), hrRound.end(), compareStudentsByProgram);
+            sort(finalSelects.begin(), finalSelects.end(), compareStudentsByProgram);
+            writeStudentData("short_by_program_round1.csv", round1);
+            writeStudentData("short_by_program_round2.csv", round2);
+            writeStudentData("short_by_program_round3.csv", round3);
+            writeStudentData("short_by_program_hrRound.csv", hrRound);
+            writeStudentData("short_by_program_finalSelects.csv", finalSelects);
+            break;
+        case 3:
+            // sort by student id
+            sort(round1.begin(), round1.end(), compareStudentsByStudentId);
+            sort(round2.begin(), round2.end(), compareStudentsByStudentId);
+            sort(round3.begin(), round3.end(), compareStudentsByStudentId);
+            sort(hrRound.begin(), hrRound.end(), compareStudentsByStudentId);
+            sort(finalSelects.begin(), finalSelects.end(), compareStudentsByStudentId);
+            writeStudentData("short_by_id_round1.csv", round1);
+            writeStudentData("short_by_id_round2.csv", round2);
+            writeStudentData("short_by_id_round3.csv", round3);
+            writeStudentData("short_by_id_hrRound.csv", hrRound);
+            writeStudentData("short_by_id_finalSelects.csv", finalSelects);
+            break;
 
         case 4:
-           // Searching for a student detail
+            // Searching for a student detail
             cout << "Enter student name or ID: ";
-            cin.ignore();//https://stackoverflow.com/questions/25475384/when-and-why-do-i-need-to-use-cin-ignore-in-c
-            getline(cin,input);
-            
+            cin.ignore(); // https://stackoverflow.com/questions/25475384/when-and-why-do-i-need-to-use-cin-ignore-in-c
+            getline(cin, input);
 
             for (const auto &temp : round1)
             {
-                
+
                 if (temp.name == input)
-                {   
+                {
                     same_name_found++;
                 }
             }
-            
+
             if (same_name_found > 1)
             {
                 cout << "Enter student ID: ";
-                getline(cin,input);
+                getline(cin, input);
             }
 
             // Search for the student in each round and count the rounds found
@@ -254,7 +248,6 @@ int main()
                 {
                     studentDetails = student;
                     roundsFound++;
-
 
                     cout << "Student Name: " << studentDetails.name << endl;
                     cout << "Student ID: " << studentDetails.studentId << endl;
@@ -277,7 +270,7 @@ int main()
                     studentDetails = student;
                     roundsFound++;
                     cout << "Found in Round 2:" << endl;
-                    
+
                     cout << "Interview status:" << studentDetails.interviewStatus << endl;
                     cout << "Interview date:" << studentDetails.interviewDate << endl;
                     cout << "Interview start time :" << studentDetails.interviewStartTime << endl;
@@ -294,7 +287,7 @@ int main()
                     studentDetails = student;
                     roundsFound++;
                     cout << "Found in Round 3:" << endl;
-                    
+
                     cout << "Interview status:" << studentDetails.interviewStatus << endl;
                     cout << "Interview date:" << studentDetails.interviewDate << endl;
                     cout << "Interview start time :" << studentDetails.interviewStartTime << endl;
@@ -311,7 +304,7 @@ int main()
                     studentDetails = student;
                     roundsFound++;
                     cout << "Found in HR Round:" << endl;
-                   
+
                     cout << "Interview status:" << studentDetails.interviewStatus << endl;
                     cout << "Interview date:" << studentDetails.interviewDate << endl;
                     cout << "Interview start time :" << studentDetails.interviewStartTime << endl;
@@ -328,7 +321,7 @@ int main()
                     studentDetails = student;
                     roundsFound++;
                     cout << "Found in Final Selects:" << endl;
-                    
+
                     cout << "Interview status:" << studentDetails.interviewStatus << endl;
                     cout << "Interview date:" << studentDetails.interviewDate << endl;
                     cout << "Interview start time :" << studentDetails.interviewStartTime << endl;
@@ -337,7 +330,6 @@ int main()
                 }
             }
 
-            
             cout << "Total rounds found: " << roundsFound << endl;
 
             break;
@@ -355,31 +347,6 @@ int main()
                 cout << "Authentication successful. You can now insert student records." << endl;
 
                 cout << "Enter details for the new student:" << endl;
-                cout << "Name: ";
-                cin.ignore(); // Ignore newline character in the buffer
-                getline(cin, newStudent.name);
-                cout << "Interview Date: ";
-                getline(cin, newStudent.interviewDate);
-                cout << "Interview Status: ";
-                getline(cin, newStudent.interviewStatus);
-                cout << "Interview Start Time: ";
-                getline(cin, newStudent.interviewStartTime);
-                cout << "Interview End Time: ";
-                getline(cin, newStudent.interviewEndTime);
-                cout << "Student ID: ";
-                getline(cin, newStudent.studentId);
-                cout << "Email: ";
-                getline(cin, newStudent.email);
-                cout << "Program: ";
-                getline(cin, newStudent.program);
-                cout << "Contact No.: ";
-                getline(cin, newStudent.contactNo);
-                cout << "Whatsapp No.: ";
-                getline(cin, newStudent.whatsappNo);
-                cout << "Alternate No.: ";
-                getline(cin, newStudent.alternateNo);
-                cout << "Skype ID: ";
-                getline(cin, newStudent.skypeId);
 
                 int roundChoice;
                 cout << "Select the round to insert the student:" << endl;
@@ -394,23 +361,148 @@ int main()
                 switch (roundChoice)
                 {
                 case 1:
-                    newStudent.srNo=nuberofstudent[0]+1;
+                    newStudent.srNo = nuberofstudent[0] + 1;
+                    cout << "Name: ";
+                    cin.ignore(); // Ignore newline character in the buffer
+                    getline(cin, newStudent.name);
+                    cout << "Interview Date: ";
+                    getline(cin, newStudent.interviewDate);
+                    cout << "Interview Status: ";
+                    getline(cin, newStudent.interviewStatus);
+                    cout << "Interview Start Time: ";
+                    getline(cin, newStudent.interviewStartTime);
+                    cout << "Interview End Time: ";
+                    getline(cin, newStudent.interviewEndTime);
+                    cout << "Student ID: ";
+                    getline(cin, newStudent.studentId);
+                    cout << "Email: ";
+                    getline(cin, newStudent.email);
+                    cout << "Program: ";
+                    getline(cin, newStudent.program);
+                    cout << "Contact No.: ";
+                    getline(cin, newStudent.contactNo);
+                    cout << "Whatsapp No.: ";
+                    getline(cin, newStudent.whatsappNo);
+                    cout << "Alternate No.: ";
+                    getline(cin, newStudent.alternateNo);
+                    cout << "Skype ID: ";
+                    getline(cin, newStudent.skypeId);
                     round1.push_back(newStudent);
                     break;
                 case 2:
-                    newStudent.srNo=nuberofstudent[1]+1;
+                    newStudent.srNo = nuberofstudent[1] + 1;
+                    cout << "Name: ";
+                    cin.ignore(); // Ignore newline character in the buffer
+                    getline(cin, newStudent.name);
+                    cout << "Interview Date: ";
+                    getline(cin, newStudent.interviewDate);
+                    cout << "Interview Status: ";
+                    getline(cin, newStudent.interviewStatus);
+                    cout << "Interview Start Time: ";
+                    getline(cin, newStudent.interviewStartTime);
+                    cout << "Interview End Time: ";
+                    getline(cin, newStudent.interviewEndTime);
+                    cout << "Student ID: ";
+                    getline(cin, newStudent.studentId);
+                    cout << "Email: ";
+                    getline(cin, newStudent.email);
+                    cout << "Program: ";
+                    getline(cin, newStudent.program);
+                    cout << "Contact No.: ";
+                    getline(cin, newStudent.contactNo);
+                    cout << "Whatsapp No.: ";
+                    getline(cin, newStudent.whatsappNo);
+                    cout << "Alternate No.: ";
+                    getline(cin, newStudent.alternateNo);
+                    cout << "Skype ID: ";
+                    getline(cin, newStudent.skypeId);
                     round2.push_back(newStudent);
                     break;
                 case 3:
-                    newStudent.srNo=nuberofstudent[2]+1;
+                    newStudent.srNo = nuberofstudent[2] + 1;
+                    cout << "Name: ";
+                    cin.ignore(); // Ignore newline character in the buffer
+                    getline(cin, newStudent.name);
+                    cout << "Interview Date: ";
+                    getline(cin, newStudent.interviewDate);
+                    cout << "Interview Status: ";
+                    getline(cin, newStudent.interviewStatus);
+                    cout << "Interview Start Time: ";
+                    getline(cin, newStudent.interviewStartTime);
+                    cout << "Interview End Time: ";
+                    getline(cin, newStudent.interviewEndTime);
+                    cout << "Student ID: ";
+                    getline(cin, newStudent.studentId);
+                    cout << "Email: ";
+                    getline(cin, newStudent.email);
+                    cout << "Program: ";
+                    getline(cin, newStudent.program);
+                    cout << "Contact No.: ";
+                    getline(cin, newStudent.contactNo);
+                    cout << "Whatsapp No.: ";
+                    getline(cin, newStudent.whatsappNo);
+                    cout << "Alternate No.: ";
+                    getline(cin, newStudent.alternateNo);
+                    cout << "Skype ID: ";
+                    getline(cin, newStudent.skypeId);
                     round3.push_back(newStudent);
                     break;
                 case 4:
-                    newStudent.srNo=nuberofstudent[3]+1;
+                    newStudent.srNo = nuberofstudent[3] + 1;
+                    cout << "Name: ";
+                    cin.ignore(); // Ignore newline character in the buffer
+                    getline(cin, newStudent.name);
+                    cout << "Interview Date: ";
+                    getline(cin, newStudent.interviewDate);
+                    cout << "Interview Status: ";
+                    getline(cin, newStudent.interviewStatus);
+                    cout << "Interview Start Time: ";
+                    getline(cin, newStudent.interviewStartTime);
+                    cout << "Interview End Time: ";
+                    getline(cin, newStudent.interviewEndTime);
+                    cout << "Student ID: ";
+                    getline(cin, newStudent.studentId);
+                    cout << "Email: ";
+                    getline(cin, newStudent.email);
+                    cout << "Program: ";
+                    getline(cin, newStudent.program);
+                    cout << "Contact No.: ";
+                    getline(cin, newStudent.contactNo);
+                    cout << "Whatsapp No.: ";
+                    getline(cin, newStudent.whatsappNo);
+                    cout << "Alternate No.: ";
+                    getline(cin, newStudent.alternateNo);
+                    cout << "Skype ID: ";
+                    getline(cin, newStudent.skypeId);
                     hrRound.push_back(newStudent);
                     break;
                 case 5:
-                    newStudent.srNo=nuberofstudent[4]+1;
+                    newStudent.srNo = nuberofstudent[4] + 1;
+                    cout << "Name: ";
+                    cin.ignore(); // Ignore newline character in the buffer
+                    getline(cin, newStudent.name);
+                    cout << "Interview Date: ";
+                    getline(cin, newStudent.interviewDate);
+                    cout << "Interview Status: ";
+                    getline(cin, newStudent.interviewStatus);
+                    cout << "Interview Start Time: ";
+                    getline(cin, newStudent.interviewStartTime);
+                    cout << "Interview End Time: ";
+                    getline(cin, newStudent.interviewEndTime);
+                    cout << "Student ID: ";
+                    getline(cin, newStudent.studentId);
+                    cout << "Email: ";
+                    getline(cin, newStudent.email);
+                    cout << "Program: ";
+                    getline(cin, newStudent.program);
+                    cout << "Contact No.: ";
+                    getline(cin, newStudent.contactNo);
+                    cout << "Whatsapp No.: ";
+                    getline(cin, newStudent.whatsappNo);
+                    cout << "Alternate No.: ";
+                    getline(cin, newStudent.alternateNo);
+                    cout << "Skype ID: ";
+                    getline(cin, newStudent.skypeId);
                     finalSelects.push_back(newStudent);
                     break;
                 default:
@@ -428,7 +520,7 @@ int main()
             }
             else
             {
-        
+
                 cout << "Authentication failed. Invalid username or password." << endl;
             }
             break;
@@ -443,15 +535,15 @@ int main()
             cout << "Enter the name or ID of the student to delete: ";
             if (authenticateUser(username, password))
             {
-                
+
                 cout << "Authentication successful. You can now delete student records." << endl;
 
                 cin.ignore(); // Ignore newline character in the buffer
                 getline(cin, deleteNameOrId);
 
                 // Search and remove the student from each round
-                //https://stackoverflow.com/questions/7627098/what-is-a-lambda-expression-and-when-should-i-use-one
-                //https://youtu.be/OQ_lR9y0eqI
+                // https://stackoverflow.com/questions/7627098/what-is-a-lambda-expression-and-when-should-i-use-one
+                // https://youtu.be/OQ_lR9y0eqI
                 auto removeStudentFromRound = [&](vector<Student> &round)
                 {
                     auto it = remove_if(round.begin(), round.end(), [&](const Student &student)
@@ -459,9 +551,9 @@ int main()
                     if (it != round.end())
                     {
                         round.erase(it, round.end());
-                        return true; 
+                        return true;
                     }
-                    return false; 
+                    return false;
                 };
 
                 bool studentRemoved = false;
@@ -473,7 +565,7 @@ int main()
 
                 if (studentRemoved)
                 {
-                   
+
                     writeStudentData("round1.csv", round1);
                     writeStudentData("round2.csv", round2);
                     writeStudentData("round3.csv", round3);
