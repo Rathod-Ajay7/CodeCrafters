@@ -41,4 +41,35 @@ This project is a PLACEMENT MANAGER SYSTEM designed to manage a student data for
 3. Choose an option from the menu to perform specific tasks such as sorting data, searching for students, inserting new student records, or deleting student records.
 ## NOTE
 
-As our group members don't have proper device. So we have upload our whole code from one of our group member whose id is 202301221@daiict.ac.in.
+As our group members don't have proper device. So we have upload ou whole code from one of our group member whose id is 202301221@daiict.ac.in.
+## Contribution
+
+1.**Gaurav & Vraj** :  functions:
+                   1. compareStudentsByName()
+                   2. compareStudentsByProgram()
+                   3. compareStudentsByStudentId()
+                   int main():
+                   in main switch case:
+                   case 1: Sort data by name
+                   case 2: Sort data by program
+                   case 3: Sort data by student ID 
+                   
+
+2.**Ajay & Mukund** : function:
+                  1. readStudentData()
+                  2. writeStudentData()
+                  int main():
+                  case 4: Search for a student 
+                  case 5: Insert a new student in a round
+                  case 6: Delete a student from a round
+                  
+3.**Ajay**         : function:
+                 .Authentication based on username and password
+
+**Note** : Remaining part was done by all members together.
+           
+                  
+                  
+                   
+
+
